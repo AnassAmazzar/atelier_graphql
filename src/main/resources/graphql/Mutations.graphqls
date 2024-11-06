@@ -1,0 +1,4 @@
+type Mutation {
+    saveVideo(videoRequest: VideoRequest):VideoDto
+    saveCreator(creatorRequest: CreatorRequest):CreatorDto
+}

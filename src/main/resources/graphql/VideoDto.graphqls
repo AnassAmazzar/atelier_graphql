@@ -1,8 +1,7 @@
-type Video{
-    id:Int,
+type VideoDto{
     name:String,
     url:String,
     description:String,
     datePublication:String,
-    creator:Creator
+    creator:CreatorDto
 }

@@ -1,5 +1,4 @@
-type Creator{
-    id:Int,
+type CreatorDto{
     name:String,
     email:String
 }

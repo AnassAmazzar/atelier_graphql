@@ -17,6 +17,7 @@ public class Creator {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     Integer id;
     String name;
+    @Column(unique = true)
     String email;
     @OneToMany(mappedBy = "creator")
     private List<Video> videoList;

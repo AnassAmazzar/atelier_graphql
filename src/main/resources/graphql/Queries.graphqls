@@ -1,4 +1,4 @@
 type Query{
-    videoList : [Video]
-    creatorById(id:Int) : Creator
+    videoList : [VideoDto]
+    creatorById(id:Int) : CreatorDto
 }

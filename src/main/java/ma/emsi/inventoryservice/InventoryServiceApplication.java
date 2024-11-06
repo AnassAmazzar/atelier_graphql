@@ -35,7 +35,7 @@ public class InventoryServiceApplication {
 					new Creator(4,"Daniel Perrin", "daniel.perrin@example.com", null),
 					new Creator(5,"Emma Laurent", "emma.laurent@example.com", null)
 			);
-			creatorRepository.saveAll(creators );
+			creatorRepository.saveAll(creators);
 
 			int i=10;
 			//List<Video> videos= new ArrayList<>();
