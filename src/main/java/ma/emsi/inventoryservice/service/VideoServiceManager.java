@@ -7,5 +7,7 @@ import java.util.List;
 public interface VideoServiceManager {
     List<Video> videoList();
     VideoDto saveVideo(VideoDto videoDto);
+    VideoDto getVideoById(Integer id);
+    VideoDto updateVideo(VideoDto videoDto);
 
 }

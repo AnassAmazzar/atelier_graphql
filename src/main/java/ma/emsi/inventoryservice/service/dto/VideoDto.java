@@ -17,5 +17,5 @@ public class VideoDto {
     private String url;
     private String description;
     private LocalDate datePublication;
-    private Creator creator;
+    private CreatorDto creatorDto;
 }

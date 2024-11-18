@@ -1,8 +1,10 @@
 package ma.emsi.inventoryservice.service;
 
+import ma.emsi.inventoryservice.dao.entities.Creator;
 import ma.emsi.inventoryservice.dao.entities.Video;
 import ma.emsi.inventoryservice.dao.repository.CreatorRepository;
 import ma.emsi.inventoryservice.dao.repository.VideoRepository;
+import ma.emsi.inventoryservice.service.dto.CreatorDto;
 import ma.emsi.inventoryservice.service.dto.VideoDto;
 import ma.emsi.inventoryservice.service.mapping.CreatorMapping;
 import ma.emsi.inventoryservice.service.mapping.VideoMapping;
@@ -29,7 +31,24 @@ public class VideoService implements VideoServiceManager{
 
     @Override
     public VideoDto saveVideo(VideoDto videoDto) {
-        videoDto.setCreator(creatorRepository.findByEmail(videoDto.getCreator().getEmail()));
+        Creator creator = creatorMapping.fromCreatorDtotoCreator(videoDto.getCreatorDto());
+        CreatorDto creatorDto = creatorMapping.fromCreatortoCreatorDto(creatorRepository.findByEmail(creator.getEmail()));
+        videoDto.setCreatorDto(creatorDto);
+        return videoMapping.fromVideotoVideoDto(videoRepository.save(videoMapping.fromVideoDtotoVideo(videoDto)));
+    }
+
+    @Override
+    public VideoDto getVideoById(Integer id) {
+        Video video = videoRepository.findById(id).get();
+        VideoDto videoDto = videoMapping.fromVideotoVideoDto(video);
+        return videoDto;
+    }
+
+    @Override
+    public VideoDto updateVideo(VideoDto videoDto) {
+        Creator creator = creatorMapping.fromCreatorDtotoCreator(videoDto.getCreatorDto());
+        CreatorDto creatorDto = creatorMapping.fromCreatortoCreatorDto(creatorRepository.findByEmail(creator.getEmail()));
+        videoDto.setCreatorDto(creatorDto);
         return videoMapping.fromVideotoVideoDto(videoRepository.save(videoMapping.fromVideoDtotoVideo(videoDto)));
     }
 }

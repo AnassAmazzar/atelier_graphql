@@ -8,13 +8,12 @@ import ma.emsi.inventoryservice.service.VideoServiceManager;
 import ma.emsi.inventoryservice.service.dto.CreatorDto;
 import ma.emsi.inventoryservice.service.dto.VideoDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
+import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Controller
 public class VideoGraphQlController {
@@ -38,6 +37,7 @@ public class VideoGraphQlController {
     }
     /*End Code For Video*/
 
+
     /*Start Code For Creator*/
     @QueryMapping
     public CreatorDto creatorById(@Argument Integer id){
@@ -47,6 +47,28 @@ public class VideoGraphQlController {
     @MutationMapping
     public CreatorDto saveCreator(@Argument CreatorDto creatorRequest){
         return creatorServiceManager.addCreatorDto(creatorRequest);
+    }
+
+    @SubscriptionMapping
+    public Flux<CreatorDto> notifyVideoChange(){
+        System.out.println("SubscriptionMapping Entry");
+        return Flux.fromStream(
+            Stream.generate(()->{
+            System.out.println("SubscriptionMapping Entry Flux");
+              try {
+                  Thread.sleep(1000);
+              }catch (InterruptedException e){
+                  throw new RuntimeException(e);
+              }
+              CreatorDto creatorDto = CreatorDto.builder().name("chawki").email("chawki@gmail.com").build();
+              CreatorDto cdto = creatorServiceManager.addCreatorDto(creatorDto);
+              //VideoDto videoDto = videoServiceManager.getVideoById(1);
+              //videoDto.setCreatorDto(cdto);
+              //videoServiceManager.updateVideo(videoDto);
+              System.out.println("SubscriptionMapping : " + cdto);
+              return cdto;
+            })
+        );
     }
     /*End Code For Creator*/
 
