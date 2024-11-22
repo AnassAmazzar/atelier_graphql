@@ -31,10 +31,13 @@ public class VideoService implements VideoServiceManager{
 
     @Override
     public VideoDto saveVideo(VideoDto videoDto) {
-        Creator creator = creatorMapping.fromCreatorDtotoCreator(videoDto.getCreatorDto());
+        Creator creator = creatorMapping.fromCreatorDtotoCreator(videoDto.getCreator());
         CreatorDto creatorDto = creatorMapping.fromCreatortoCreatorDto(creatorRepository.findByEmail(creator.getEmail()));
-        videoDto.setCreatorDto(creatorDto);
-        return videoMapping.fromVideotoVideoDto(videoRepository.save(videoMapping.fromVideoDtotoVideo(videoDto)));
+        videoDto.setCreator(creatorDto);
+
+        Video d = videoMapping.fromVideoDtotoVideo(videoDto);
+        Video v = videoRepository.save(d);
+        return videoMapping.fromVideotoVideoDto(v);
     }
 
     @Override
@@ -46,9 +49,9 @@ public class VideoService implements VideoServiceManager{
 
     @Override
     public VideoDto updateVideo(VideoDto videoDto) {
-        Creator creator = creatorMapping.fromCreatorDtotoCreator(videoDto.getCreatorDto());
+        Creator creator = creatorMapping.fromCreatorDtotoCreator(videoDto.getCreator());
         CreatorDto creatorDto = creatorMapping.fromCreatortoCreatorDto(creatorRepository.findByEmail(creator.getEmail()));
-        videoDto.setCreatorDto(creatorDto);
+        videoDto.setCreator(creatorDto);
         return videoMapping.fromVideotoVideoDto(videoRepository.save(videoMapping.fromVideoDtotoVideo(videoDto)));
     }
 }
